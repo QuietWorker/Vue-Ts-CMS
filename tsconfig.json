@@ -1,18 +1,27 @@
 {
   "compilerOptions": {
+    //目标代码(ts->js(es5/6/7))
     "target": "esnext",
+    //目标代码需要使用的模块化方案(commonjs require/module.exports/es module import/export)
     "module": "esnext",
+    //严格一些严格的检查(any)
     "strict": true,
+    //对jsx进行怎么样的处理
     "jsx": "preserve",
+    //按照node 的方式去解析模块 import
     "moduleResolution": "node",
+    //跳过对一些库的类型检测 (axios -> 类型/lodash -> @type/lodash /其他的第三方)
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
+    //要不要生成映射文件(ts->js)
     "sourceMap": true,
+    //文件路径在解析时 基本url
     "baseUrl": ".",
     "types": ["webpack-env"],
+    //路径解析
     "paths": {
       "@/*": ["src/*"]
     },
