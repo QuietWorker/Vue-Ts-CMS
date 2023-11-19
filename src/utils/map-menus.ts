@@ -83,6 +83,38 @@ export function pathMapToMenu(userMenu: any[], currentPath: string , breadcrumbs
     }
   }
 }
+export function mapMenusToPermissions(userMenu: any[]) {
+  const permissions:string[] = []
+
+  const _recueseGetPermisson = (menus: any) => {
+
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recueseGetPermisson(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  _recueseGetPermisson(userMenu)
+  return permissions
+}
+
+export function getMenuLeafKeys(menuList: any[]) {
+  const leftKeys: number[] = []
+  const _recueseGetLeaf = (menuList:any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recueseGetLeaf(menu.children)
+      } else {
+        leftKeys.push(menu.id)
+      }
+    }
+  }
+  _recueseGetLeaf(menuList)
+
+  return leftKeys
+}
 
 export {firstRoute}
 // export function pathMapBreadCrumb(userMenu: any[], currentPath: string): any{

@@ -10,7 +10,7 @@
               <el-icon><Delete /></el-icon>
               <span>重置</span>
             </el-button>
-            <el-button type="primary">
+            <el-button type="primary" @click="handleSearchChange">
               <el-icon><Search /></el-icon>
               <span>搜索</span>
             </el-button>
@@ -33,7 +33,8 @@ export default defineComponent({
       required:true
     }
   },
-  setup(props) {
+  emits:['resetBtnClick','queryBtnClick'], //发送点击事件
+  setup(props,{emit}) {
     //双向绑定的属性应该是由配置文件的field来决定的
     const formItems = props.searchFormConfig?.formItem ?? []
 
@@ -52,14 +53,19 @@ export default defineComponent({
       // for (const key in formOriginData) {
       //   formData.value[`${key}`] = formOriginData[key]
       // }
-
       formData.value = formOriginData
+      emit('resetBtnClick')
     }
 
     //3.当用户点击搜索
+    const handleSearchChange = () => {
+      emit('queryBtnClick',formData.value)
+    }
+
     return {
       formData,
-      handleResetClick
+      handleResetClick,
+      handleSearchChange
     }
   }
 })

@@ -8,6 +8,7 @@
         <template v-for="item in formItem" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
+            v-if="!item.isHidden"
             :label="item.label"
             :rules="item.rules"
             :style="itemStyle">
@@ -26,13 +27,15 @@
               :placeholder="item.placeholder"
               v-bind="item.otherOptions"
               style="width: 100%;"
-              :model-value="modelValue[`${item.field}`]">
+              :model-value="modelValue[`${item.field}`]"
+              @update:modelValue="handleValueChange($event, item.field)">
               <el-option
               v-for="option in item.options"
               :key="option.value"
               :value="option.value"
               :label="option.label"
-              :model-value="modelValue[`${item.field}`]">
+              :model-value="modelValue[`${item.field}`]"
+              @update:modelValue="handleValueChange($event, item.field)">
               </el-option>
             </el-select>
               </template>
@@ -40,7 +43,8 @@
               <el-date-picker
               style="width: 100%;"
               v-bind="item.otherOptions"
-              :model-value="modelValue[`${item.field}`]">
+              :model-value="modelValue[`${item.field}`]"
+              @update:modelValue="handleValueChange($event, item.field)">
             </el-date-picker>
               </template>
             </el-form-item>
@@ -71,7 +75,7 @@ export default defineComponent({
     },
     lableWidth: {
       type: String,
-      defalut:"100px"
+      default:"100px"
     },
     itemStyle: {
       type: Object,
@@ -88,10 +92,11 @@ export default defineComponent({
         sm: 24,
         xs: 24
       })
-    }
+    },
   },
   emits:['update:modelValue'],
-  setup (props,{emit}) {
+  setup(props, { emit }) {
+
     const handleValueChange = (value:any,field:string) => {
       emit('update:modelValue',{...props.modelValue,[field]:value})
     }

@@ -3,7 +3,7 @@ import { IForm } from "@/base-ui/form";
 export const searchFormConfig: IForm = {
       formItem: [
         {
-          field: 'role',
+          field: 'name',
           type: "input",
           label: '角色名称',
           rules: [],

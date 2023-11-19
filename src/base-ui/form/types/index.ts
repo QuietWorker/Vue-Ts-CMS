@@ -7,7 +7,8 @@ export interface IFormItem{
   rules?: []
   placeholder: any
   options?: any
-  otherOptions?:any
+  otherOptions?: any
+  isHidden?:boolean
 }
 
 

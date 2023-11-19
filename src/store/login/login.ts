@@ -7,7 +7,7 @@ import { accountLoginRequest, userInfoRequest, userMenuRequest } from "@/service
 
 import localCache from '@/utils/cache'
 import router from "@/router";
-import { mapMenuToRoutes } from "@/utils/map-menus";
+import { mapMenuToRoutes, mapMenusToPermissions } from "@/utils/map-menus";
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,//启用命名空间
@@ -16,7 +16,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenu:[]
+      userMenu: [],
+      permissions:[]
     }
   },
   getters: {},
@@ -37,16 +38,23 @@ const loginModule: Module<ILoginState, IRootState> = {
         router.addRoute('main',route)
       })
       console.log(routes);
+
+      //获取按钮权限
+      const permissions = mapMenusToPermissions(userMenu)
+      state.permissions = permissions
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit,dispatch }, payload: IAccount) {
       //1.实现登录逻辑
 
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
       commit('changeToken',token)
       localCache.setCache('token', token)
+
+      //发送初始化请求(完整的role/department)
+      dispatch('getInitialData', null, { root: true }) //调用根里面的action
 
       //2.用户验证
 
@@ -64,10 +72,12 @@ const loginModule: Module<ILoginState, IRootState> = {
       //4.跳到首页
       router.push('/main')
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit,dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
-        commit('changeToken',token)
+        commit('changeToken', token)
+        //发送初始化请求(完整的role/department)
+        dispatch('getInitialData', null, { root: true }) //调用根里面的action
       }
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {

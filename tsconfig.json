@@ -20,6 +20,7 @@
     "sourceMap": true,
     //文件路径在解析时 基本url
     "baseUrl": ".",
+    "resolveJsonModule": true, // 启用导入 JSON 文件功能
     "types": ["webpack-env"],
     //路径解析
     "paths": {
@@ -29,6 +30,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",

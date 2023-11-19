@@ -7,11 +7,16 @@ declare module '*.vue' {
   interface ComponentCustomProperties {
     $store: Store;
   }
+  import Vue from 'vue'
+  export default Vue
 }
-
-
+//声明json文件
+declare module '*.json'
 declare module 'vue' {
   interface ComponentCustomProperties {
     $filters: any
   }
+  import Vue from 'vue'
+  export default Vue
+
 }

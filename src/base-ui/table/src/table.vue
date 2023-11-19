@@ -13,6 +13,8 @@
       border
       stripe
       style="width: 100%"
+      lazy
+      v-bind="childrenProps"
       @selection-change="handleSelectionChange">
         <el-table-column
             v-if="showSelectColumn"
@@ -29,7 +31,7 @@
         min-width="50"
         ></el-table-column>
         <template v-for="propItem in propList" :key="propItem.prop">
-          <el-table-column v-bind="propItem" align="center">
+          <el-table-column v-bind="propItem" align="center" showOverflowTooltip>
             <template #default="slotProps" >
                 <slot :name="propItem.slotName" :row="slotProps.row">
                 {{ slotProps.row[propItem.prop] }} <!-- 默认值 -->
@@ -39,17 +41,14 @@
         </template>
       </el-table>
 
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
-        v-model:current-page="currentPage4"
-        v-model:page-size="pageSize4"
-        :page-sizes="[100, 200, 300, 400]"
-        :small="small"
-        :disabled="disabled"
-        :background="background"
+        v-model:current-page="page.currentPage"
+        v-model:page-size="page.pageSize"
+        :page-sizes="[5, 10, 20, 30]"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total= "listCount"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -82,16 +81,45 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    listCount: {
+      type: Number,
+      default: 0
+    },
+    page: {
+      type: Object,
+      default: () => ({
+        currentPage: 0,
+        pageSize: 10
+      })
+    },
+    childrenProps:{
+      type: Object,
+      default:()=>({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
+
     }
   },
-  emits:['selectionChange'],
+  emits:['selectionChange','update:page'],
   setup(props,{emit}) {
     const handleSelectionChange = (value: any) => {
       //需要把数据传到对应组件
       emit('selectionChange',value)
     }
+
+    const handleSizeChange = (pageSize:number) => {
+      emit('update:page',{...props.page,pageSize})
+    }
+    const handleCurrentChange = (currentPage:number) => {
+      emit('update:page',{...props.page,currentPage})
+    }
     return {
-      handleSelectionChange
+      handleSelectionChange,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 })
