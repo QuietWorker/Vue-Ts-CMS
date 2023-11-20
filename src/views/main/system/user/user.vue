@@ -1,23 +1,26 @@
 <template>
   <div class="user">
-      <page-search
+    <page-search
       :searchFormConfig="searchFormConfig"
       @resetBtnClick="handleResetClick"
-      @queryBtnClick="handleQueryClick"/>
+      @queryBtnClick="handleQueryClick"
+    />
 
-      <page-content
+    <page-content
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       pageName="users"
       parent-name="system"
       @edit-btn-click="handleEditData"
-      @new-btn-click="handleNewData" />
+      @new-btn-click="handleNewData"
+    />
 
-      <page-modal
+    <page-modal
       :defaultInfo="defaultInfo"
       ref="pageModalRef"
       :modal-config="modalConfigRef"
-      page-name="users"/>
+      page-name="users"
+    />
   </div>
 </template>
 
@@ -52,10 +55,9 @@ export default defineComponent({
     //1.处理密码的逻辑
     const newCallBack = () => {
       const passwordItem = modalTableConfig.formItem.find(
-        (item) =>item.field==='password'
+        (item) => item.field === 'password'
       )
       passwordItem!.isHidden = false
-
     }
     const editCallBack = () => {
       const passwordItem = modalTableConfig.formItem.find(
@@ -82,7 +84,8 @@ export default defineComponent({
     })
 
     //3.调用hook获取公共变量和函数
-    const [defaultInfo, pageModalRef, handleNewData, handleEditData] = usePageModal(newCallBack, editCallBack)
+    const [defaultInfo, pageModalRef, handleNewData, handleEditData] =
+      usePageModal(newCallBack, editCallBack)
     return {
       searchFormConfig,
       contentTableConfig,
@@ -100,6 +103,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>

@@ -1,71 +1,69 @@
 <template>
   <div class="nav-menu">
-      <!-- logo -->
-      <div class="logo">
-        <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-        <span class="title" v-if="!isCollapse">Vue3 + TS</span>
-      </div>
-      <!-- menu list -->
-        <el-menu
-          :default-active="defaultValue"
-          class="el-menu-vertical-demo"
-          text-color="#b7bdc3"
-          active-text-color="#fff"
-          background-color="#001529"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse = "isCollapse"
-        >
-        <template v-for="item in userMenus" :key="item.id">
-          <!-- 二级菜单 -->
-          <template v-if="item.type===1">
-            <!-- 二级菜单可以展开的item -->
-            <el-sub-menu :index = "item.id + ''">
-              <template #title>
-                <!-- 使用动态组件加载icon -->
-                <el-icon v-if="item.icon">
+    <!-- logo -->
+    <div class="logo">
+      <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
+      <span class="title" v-if="!isCollapse">Vue3 + TS</span>
+    </div>
+    <!-- menu list -->
+    <el-menu
+      :default-active="defaultValue"
+      class="el-menu-vertical-demo"
+      text-color="#b7bdc3"
+      active-text-color="#fff"
+      background-color="#001529"
+      :collapse="isCollapse"
+    >
+      <template v-for="item in userMenus" :key="item.id">
+        <!-- 二级菜单 -->
+        <template v-if="item.type === 1">
+          <!-- 二级菜单可以展开的item -->
+          <el-sub-menu :index="item.id + ''">
+            <template #title>
+              <!-- 使用动态组件加载icon -->
+              <el-icon v-if="item.icon">
                 <component :is="item.icon.substring(8)"></component>
-                </el-icon>
-                <span>{{ item.name }}</span>
-              </template>
-              <!-- 遍历里面的item -->
-              <template v-for="subitem in item.children" :key="subitem.id">
-                <el-menu-item
-                :index = "subitem.id+''"
-                @click="handleMenuItemClick(subitem)">
-                    <template #title>
-                      <el-icon v-if="subitem.icon">
-                      <component :is="subitem.icon.substring(8)"></component>
-                      </el-icon>
-                      <span>{{ subitem.name }}</span>
-                    </template>
-                </el-menu-item>
-              </template>
-            </el-sub-menu>
-
-          </template>
-          <!-- 一季菜单 -->
-          <template v-else-if="item.type===2">
-            <el-menu-item>
-              <i v-if="item.icon" :class="item.icon"></i>
+              </el-icon>
               <span>{{ item.name }}</span>
-            </el-menu-item>
-          </template>
+            </template>
+            <!-- 遍历里面的item -->
+            <template v-for="subitem in item.children" :key="subitem.id">
+              <el-menu-item
+                :index="subitem.id + ''"
+                @click="handleMenuItemClick(subitem)"
+              >
+                <template #title>
+                  <el-icon v-if="subitem.icon">
+                    <component :is="subitem.icon.substring(8)"></component>
+                  </el-icon>
+                  <span>{{ subitem.name }}</span>
+                </template>
+              </el-menu-item>
+            </template>
+          </el-sub-menu>
         </template>
-        </el-menu>
+        <!-- 一季菜单 -->
+        <template v-else-if="item.type === 2">
+          <el-menu-item>
+            <i v-if="item.icon" :class="item.icon"></i>
+            <span>{{ item.name }}</span>
+          </el-menu-item>
+        </template>
+      </template>
+    </el-menu>
   </div>
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store';
-import { pathMapToMenu } from '@/utils/map-menus';
+import { useStore } from '@/store'
+import { pathMapToMenu } from '@/utils/map-menus'
 import { computed, defineComponent, ref } from 'vue'
-import { routerKey, useRoute, useRouter } from 'vue-router';
+import { routerKey, useRoute, useRouter } from 'vue-router'
 export default defineComponent({
   props: {
     isCollapse: {
       type: Boolean,
-      default:false
+      default: false
     }
   },
   setup() {
@@ -80,22 +78,16 @@ export default defineComponent({
     const currentPath = route.path
     //data
     //computed计算属性返回的是ref对象 所以userMenus需要用.value来获取具体值
-    const menu = pathMapToMenu(userMenus.value,currentPath)
-    const defaultValue = ref(menu.id+'')
+    const menu = pathMapToMenu(userMenus.value, currentPath)
+    const defaultValue = ref(menu.id + '')
 
     //event handle
-    const handleOpen = (key: string, keyPath: string[]) => {
-    }
-    const handleClose = (key: string, keyPath: string[]) => {
-    }
-    const handleMenuItemClick = (menuItem:any) => {
+    const handleMenuItemClick = (menuItem: any) => {
       router.push(menuItem.url)
     }
 
     return {
       userMenus,
-      handleOpen,
-      handleClose,
       handleMenuItemClick,
       defaultValue
     }

@@ -18,14 +18,14 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      default:''
+      default: ''
     },
     data: {
       type: Object as PropType<IDataType[]>,
-      required:true
+      required: true
     }
   },
-  setup (props) {
+  setup(props) {
     const option = computed(() => {
       return {
         backgroundColor: '#fff',
@@ -54,7 +54,11 @@ export default defineComponent({
           calculable: true,
           text: ['高', '低'],
           inRange: {
-            color: ['rgb(70, 240, 252)', 'rgb(250, 220, 46)', 'rgb(245, 38, 186)']
+            color: [
+              'rgb(70, 240, 252)',
+              'rgb(250, 220, 46)',
+              'rgb(245, 38, 186)'
+            ]
           },
           textStyle: {
             color: '#fff'
@@ -108,6 +112,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

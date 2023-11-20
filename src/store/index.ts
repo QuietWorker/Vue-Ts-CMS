@@ -1,6 +1,6 @@
-import { Store, createStore ,useStore as useVuexStore} from 'vuex'
+import { Store, createStore, useStore as useVuexStore } from 'vuex'
 
-import { IRootState , IStoreType } from './type'
+import { IRootState, IStoreType } from './type'
 import login from './login/login'
 import system from './main/system/system'
 import product from './main/product/product'
@@ -13,7 +13,7 @@ const store = createStore<IRootState>({
       age: 18,
       allRoles: [],
       allDepartments: [],
-      allMenus:[]
+      allMenus: []
     }
   },
 
@@ -24,23 +24,22 @@ const store = createStore<IRootState>({
     dashboard
   },
   mutations: {
-    changeAllDepartment(state,list) {
-      state.allDepartments=list
+    changeAllDepartment(state, list) {
+      state.allDepartments = list
     },
     changeAllRole(state, list) {
-      state.allRoles=list
+      state.allRoles = list
     },
     changeAllMenu(state, list) {
-      state.allMenus=list
+      state.allMenus = list
     }
   },
   actions: {
-
     async getInitialData({ commit }) {
       //请求部门数据并保存到vuex中
       const departmentResult = await pageListRequest('/department/list', {
         offset: 0,
-        size:1000
+        size: 1000
       })
       const { list: departmentList } = departmentResult.data
       commit('changeAllDepartment', departmentList)
@@ -48,22 +47,20 @@ const store = createStore<IRootState>({
       //请求角色数据并保存到vuex中
       const roleResult = await pageListRequest('/role/list', {
         offset: 0,
-        size:1000
+        size: 1000
       })
       const { list: roleList } = roleResult.data
-      commit('changeAllRole',roleList)
+      commit('changeAllRole', roleList)
 
       //请求菜单树数据并保存到vuex中
 
       const menuResult = await pageListRequest('/menu/list', {
         offset: 0,
-        size:1000
+        size: 1000
       })
       const { list: menuList } = menuResult.data
-      commit('changeAllMenu',menuList)
-
-    },
-
+      commit('changeAllMenu', menuList)
+    }
   }
 })
 
@@ -72,9 +69,8 @@ export default store
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
   // store.dispatch('getInitialData') //应该放到token获取后才调用
-
 }
 
-export function useStore():Store<IStoreType> {
+export function useStore(): Store<IStoreType> {
   return useVuexStore()
 }

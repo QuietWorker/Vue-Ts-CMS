@@ -1,12 +1,11 @@
-import { IRootState } from "@/store/type";
-import { Module } from "vuex";
-import { IProductState } from "./type";
-import { pageListRequest } from "@/service/main/system/system";
+import { IRootState } from '@/store/type'
+import { Module } from 'vuex'
+import { IProductState } from './type'
+import { pageListRequest } from '@/service/main/system/system'
 
-
-const productModule: Module<IProductState,IRootState> = {
+const productModule: Module<IProductState, IRootState> = {
   namespaced: true,
-  state(){
+  state() {
     return {
       goodsList: [],
       goodsCount: 0
@@ -14,21 +13,21 @@ const productModule: Module<IProductState,IRootState> = {
   },
   getters: {
     pageListData(state) {
-      return (pageName:string) => {
-        return (state as any) [`${pageName}List`]
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`]
       }
     },
     pageListCount(state) {
-      return (pageName:string) => {
-        return (state as any) [`${pageName}Count`]
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
   mutations: {
-    changeGoodsList(state,goodsList:any) {
+    changeGoodsList(state, goodsList: any) {
       state.goodsList = goodsList
     },
-    changeGoodsCount(state,goodsCount:any) {
+    changeGoodsCount(state, goodsCount: any) {
       state.goodsCount = goodsCount
     }
   },
@@ -42,9 +41,8 @@ const productModule: Module<IProductState,IRootState> = {
       const totalCount = pageResult.data.totalCount
 
       commit('changeGoodsList', list)
-      commit('changeGoodsCount',totalCount)
+      commit('changeGoodsCount', totalCount)
     }
   }
-
 }
 export default productModule

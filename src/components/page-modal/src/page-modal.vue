@@ -1,29 +1,29 @@
 <template>
   <div class="page-modal">
-        <el-dialog
-          v-model="dialogVisible"
-          title="新建用户"
-          width="30%"
-          destroy-on-close
-          >
-        <yy-form v-model="formData" v-bind="modalConfig"></yy-form>
-        <slot></slot>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="handleConfirmClick">
-              确定
-            </el-button>
-          </span>
-        </template>
-      </el-dialog>
-        </div>
+    <el-dialog
+      v-model="dialogVisible"
+      title="新建用户"
+      width="30%"
+      destroy-on-close
+    >
+      <yy-form v-model="formData" v-bind="modalConfig"></yy-form>
+      <slot></slot>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleConfirmClick">
+            确定
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { useStore } from '@/store';
-import yyForm from '@/base-ui/form';
+import { useStore } from '@/store'
+import yyForm from '@/base-ui/form'
 
 export default defineComponent({
   components: {
@@ -35,8 +35,8 @@ export default defineComponent({
       required: true
     },
     defaultInfo: {
-      type:Object,
-      default:()=>({})
+      type: Object,
+      default: () => ({})
     },
     pageName: {
       type: String,
@@ -44,10 +44,10 @@ export default defineComponent({
     },
     otherInfo: {
       type: Object,
-      default:()=>({})
+      default: () => ({})
     }
   },
-  setup (props) {
+  setup(props) {
     const dialogVisible = ref(false)
     const formData = ref<any>({})
     const store = useStore()
@@ -58,7 +58,7 @@ export default defineComponent({
         store.dispatch('system/editPageDataAction', {
           pageName: props.pageName,
           id: props.defaultInfo.id,
-          editData:{...formData.value,...props.otherInfo }
+          editData: { ...formData.value, ...props.otherInfo }
         })
       } else {
         //新建
@@ -86,6 +86,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

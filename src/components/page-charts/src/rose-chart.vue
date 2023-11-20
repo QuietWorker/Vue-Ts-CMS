@@ -1,13 +1,13 @@
 <template>
   <div class="rose-chart">
-      <baseChart :options="option"></baseChart>
+    <baseChart :options="option"></baseChart>
   </div>
 </template>
 
 <script lang="ts">
-import { PropType, computed } from 'vue';
+import { PropType, computed } from 'vue'
 import { defineComponent } from 'vue'
-import baseChart from '@/base-ui/chart';
+import baseChart from '@/base-ui/chart'
 import { IDataType } from '../types'
 export default defineComponent({
   components: {
@@ -19,7 +19,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props) {
+  setup(props) {
     const option = computed(() => {
       return {
         // legend: {
@@ -57,6 +57,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

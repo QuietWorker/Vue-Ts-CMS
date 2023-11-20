@@ -1,15 +1,15 @@
 <template>
   <div class="line-chart">
-      <baseChart :options="option"></baseChart>
+    <baseChart :options="option"></baseChart>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import baseChart from '@/base-ui/chart';
-import { computed } from 'vue';
-import { PropType } from 'vue';
-import { IDataType } from '../types';
+import baseChart from '@/base-ui/chart'
+import { computed } from 'vue'
+import { PropType } from 'vue'
+import { IDataType } from '../types'
 
 export default defineComponent({
   components: {
@@ -18,16 +18,16 @@ export default defineComponent({
   props: {
     xLabels: {
       type: Array,
-      required:true
+      required: true
     },
     values: {
       type: Array
     }
   },
-  setup (props) {
+  setup(props) {
     const option = computed(() => {
       return {
-          title: {
+        title: {
           text: '堆叠区域图'
         },
         tooltip: {
@@ -84,6 +84,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

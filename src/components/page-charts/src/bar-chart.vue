@@ -6,10 +6,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import baseChart from '@/base-ui/chart';
-import { computed } from 'vue';
-import { PropType } from 'vue';
-import { IDataType } from '../types';
+import baseChart from '@/base-ui/chart'
+import { computed } from 'vue'
+import { PropType } from 'vue'
+import { IDataType } from '../types'
 import * as echarts from 'echarts'
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
     const option = computed(() => {
       return {
         title: {
-          text: '商品收藏量',
+          text: '商品收藏量'
         },
         xAxis: {
           data: props.xLabels,

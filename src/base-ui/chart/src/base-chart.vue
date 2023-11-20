@@ -1,21 +1,21 @@
 <template>
   <div class="base-chart">
-      <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
+    <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 import { EChartsOption } from 'echarts'
-import { PropType } from 'vue';
+import { PropType } from 'vue'
 import useEchart from '../hooks/useEchart'
-import { watchEffect } from 'vue';
+import { watchEffect } from 'vue'
 export default defineComponent({
   props: {
     width: {
       type: String,
-      default:'100%'
+      default: '100%'
     },
     height: {
       type: String,
@@ -23,11 +23,10 @@ export default defineComponent({
     },
     options: {
       type: Object as PropType<EChartsOption>,
-      required:true
+      required: true
     }
   },
-  setup (props) {
-
+  setup(props) {
     const echartDivRef = ref<HTMLElement>()
 
     onMounted(() => {
@@ -46,6 +45,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,7 +2,7 @@ import * as echarts from 'echarts'
 
 import chinaMapData from '../data/china.json'
 
-echarts.registerMap('china',(chinaMapData) as any)
+echarts.registerMap('china', chinaMapData as any)
 export default function (dom: HTMLElement) {
   const echartInstance = echarts.init(dom)
 
@@ -15,7 +15,7 @@ export default function (dom: HTMLElement) {
 
   //浏览器窗口大小改变时,图表的大小也相应地改变
 
-  window.addEventListener('resize',updateSize)
+  window.addEventListener('resize', updateSize)
   return {
     echartInstance,
     setOptions,

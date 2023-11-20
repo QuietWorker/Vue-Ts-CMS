@@ -1,9 +1,8 @@
-export interface IAccount{
+export interface IAccount {
   name: string
   password: string
-
 }
-export interface ILoginResult{
+export interface ILoginResult {
   id: number
   name: string
   token: string
@@ -37,7 +36,7 @@ export interface Department {
   leader: string
 }
 
-export interface IDataType<T=any>{
+export interface IDataType<T = any> {
   code: number
   data: T
 }

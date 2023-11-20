@@ -1,23 +1,27 @@
-import { Module } from "vuex";
-import { ILoginState } from "./type";
-import { IRootState } from "../type";
+import { Module } from 'vuex'
+import { ILoginState } from './type'
+import { IRootState } from '../type'
 
-import { IAccount,IUserInfo } from "@/service/login/type";
-import { accountLoginRequest, userInfoRequest, userMenuRequest } from "@/service/login/login";
+import { IAccount, IUserInfo } from '@/service/login/type'
+import {
+  accountLoginRequest,
+  userInfoRequest,
+  userMenuRequest
+} from '@/service/login/login'
 
 import localCache from '@/utils/cache'
-import router from "@/router";
-import { mapMenuToRoutes, mapMenusToPermissions } from "@/utils/map-menus";
+import router from '@/router'
+import { mapMenuToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
-  namespaced: true,//启用命名空间
+  namespaced: true, //启用命名空间
 
   state() {
     return {
       token: '',
       userInfo: {},
       userMenu: [],
-      permissions:[]
+      permissions: []
     }
   },
   getters: {},
@@ -35,9 +39,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       //将routes => router.main.children
 
       routes.forEach((route) => {
-        router.addRoute('main',route)
+        router.addRoute('main', route)
       })
-      console.log(routes);
+      console.log(routes)
 
       //获取按钮权限
       const permissions = mapMenusToPermissions(userMenu)
@@ -45,12 +49,12 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit,dispatch }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       //1.实现登录逻辑
 
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
-      commit('changeToken',token)
+      commit('changeToken', token)
       localCache.setCache('token', token)
 
       //发送初始化请求(完整的role/department)
@@ -72,7 +76,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       //4.跳到首页
       router.push('/main')
     },
-    loadLocalLogin({ commit,dispatch }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
@@ -89,7 +93,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       }
     },
     phoneLoginAction({ commit }, payload: any) {
-      console.log('执行phoneLoginAction',payload);
+      console.log('执行phoneLoginAction', payload)
     }
   }
 }

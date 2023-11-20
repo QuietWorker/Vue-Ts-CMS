@@ -23,9 +23,7 @@ export default defineComponent({
       default: '标题'
     }
   },
-  setup () {
-
-
+  setup() {
     return {}
   }
 })

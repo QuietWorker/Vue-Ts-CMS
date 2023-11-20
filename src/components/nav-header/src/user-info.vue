@@ -1,12 +1,12 @@
 <template>
   <div class="user-info">
-      <el-dropdown>
+    <el-dropdown>
       <span class="el-dropdown-link">
         <div>
-        <el-avatar
-          :size="36"
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-        />
+          <el-avatar
+            :size="36"
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          />
         </div>
         <span>{{ name }}</span>
         <el-icon class="el-icon--right">
@@ -15,10 +15,9 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-          @click="handleExitClick">
-          <el-icon><circle-close /></el-icon>
-          <span>退出登录</span>
+          <el-dropdown-item @click="handleExitClick">
+            <el-icon><circle-close /></el-icon>
+            <span>退出登录</span>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <el-icon><User /></el-icon>
@@ -37,11 +36,11 @@
 <script lang="ts">
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
-import LocalCache  from '@/utils/cache'
+import LocalCache from '@/utils/cache'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const router = useRouter()
     const store = useStore()
     const name = computed(() => store.state.login.userInfo.name)
@@ -59,7 +58,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-  .el-dropdown-link {
+.el-dropdown-link {
   display: flex;
   align-items: center;
   cursor: pointer;

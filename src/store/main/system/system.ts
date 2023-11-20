@@ -1,13 +1,16 @@
-import { IRootState } from "@/store/type";
-import { Module } from "vuex";
-import { ISystemState } from "./types";
-import { createPageData, editPageData, pageListRequest } from "@/service/main/system/system";
-import { deletePageData } from "@/service/main/system/system";
-import _ from "lodash";
-
+import { IRootState } from '@/store/type'
+import { Module } from 'vuex'
+import { ISystemState } from './types'
+import {
+  createPageData,
+  editPageData,
+  pageListRequest
+} from '@/service/main/system/system'
+import { deletePageData } from '@/service/main/system/system'
+import _ from 'lodash'
 
 const systemModule: Module<ISystemState, IRootState> = {
-  namespaced:true,
+  namespaced: true,
   state() {
     return {
       usersList: [],
@@ -16,43 +19,41 @@ const systemModule: Module<ISystemState, IRootState> = {
       roleCount: 0,
       menuList: [],
       menuCount: 0
-
     }
   },
   mutations: {
-    changeUsersList(state,list) {
-      state.usersList=list
+    changeUsersList(state, list) {
+      state.usersList = list
     },
     changeUsersCount(state, count) {
-      state.usersCount =count
+      state.usersCount = count
     },
-    changeRoleList(state,list) {
-      state.roleList=list
+    changeRoleList(state, list) {
+      state.roleList = list
     },
-    changeRoleCount(state,count) {
-      state.roleCount=count
+    changeRoleCount(state, count) {
+      state.roleCount = count
     },
-    changeMenuList(state,list) {
-      state.menuList=list
+    changeMenuList(state, list) {
+      state.menuList = list
     },
-    changeMenuCount(state,count) {
-      state.menuCount=count
-    },
+    changeMenuCount(state, count) {
+      state.menuCount = count
+    }
   },
   getters: {
     pageListData(state) {
-      return (pageName:string) => {
-        return (state as any) [`${pageName}List`]
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`]
       }
     },
     pageListCount(state) {
-      return (pageName:string) => {
-        return (state as any) [`${pageName}Count`]
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
   actions: {
-
     //查
     async getPageListAction({ commit }, payload) {
       const pageName = payload.pageName
@@ -73,13 +74,13 @@ const systemModule: Module<ISystemState, IRootState> = {
       const changePageName = _.upperFirst(pageName)
 
       commit(`change${changePageName}List`, list)
-      commit(`change${changePageName}Count`,totalCount)
+      commit(`change${changePageName}Count`, totalCount)
     },
 
     //删
-    async deletePageDataAction({dispatch}, payload) {
+    async deletePageDataAction({ dispatch }, payload) {
       //1.获取pageName 和 id
-      const {pageName,id} = payload
+      const { pageName, id } = payload
       const url = `/${pageName}/${id}`
       //2.调用网络请求
       await deletePageData(url)
@@ -89,13 +90,13 @@ const systemModule: Module<ISystemState, IRootState> = {
         pageName,
         queryInfo: {
           offset: 0,
-          size:10
+          size: 10
         }
       })
     },
     //增
     async createPageDataAction({ dispatch }, payload) {
-      const {pageName,newData} = payload
+      const { pageName, newData } = payload
       const pageUrl = `/${pageName}`
       //调用网络请求
       await createPageData(pageUrl, newData)
@@ -104,13 +105,13 @@ const systemModule: Module<ISystemState, IRootState> = {
         pageName,
         queryInfo: {
           offset: 0,
-          size:10
+          size: 10
         }
       })
     },
     //改
-    async editPageDataAction({dispatch},payload) {
-      const { pageName, id ,editData} = payload
+    async editPageDataAction({ dispatch }, payload) {
+      const { pageName, id, editData } = payload
       const pageUrl = `/${pageName}/${id}`
       //调用网络请求
 
@@ -120,7 +121,7 @@ const systemModule: Module<ISystemState, IRootState> = {
         pageName,
         queryInfo: {
           offset: 0,
-          size:10
+          size: 10
         }
       })
     }
@@ -128,4 +129,3 @@ const systemModule: Module<ISystemState, IRootState> = {
 }
 
 export default systemModule
-

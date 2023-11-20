@@ -1,6 +1,6 @@
-import yyRequest from "@/service";
+import yyRequest from '@/service'
 
-enum DashboardAPI{
+enum DashboardAPI {
   categoryGoodsCount = '/goods/category/count',
   categoryGoodsSale = '/goods/category/sale',
   categoryGoodsFavor = '/goods/category/favor',

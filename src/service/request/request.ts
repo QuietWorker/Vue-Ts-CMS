@@ -1,7 +1,7 @@
 // http://123.207.32.32:7888/api/hy66
-import axios from "axios"
-import { AxiosInstance } from "axios"
-import type { YYRequestInterceptors, YYRequestConfig } from "./type"
+import axios from 'axios'
+import { AxiosInstance } from 'axios'
+import type { YYRequestInterceptors, YYRequestConfig } from './type'
 import { ElLoading } from 'element-plus'
 
 import 'element-plus/theme-chalk/base.css'
@@ -37,7 +37,7 @@ class YYRequest {
         // console.log('所有的实例都有的拦截器:请求拦截成功');
         this.loading = ElLoading.service({
           lock: true,
-          text: "正在请求数据....",
+          text: '正在请求数据....',
           background: 'rgba(0,0,0,.8)'
         })
         return config
@@ -55,7 +55,7 @@ class YYRequest {
         // console.log('所有的实例都有的拦截器:响应拦截成功')
         const data = res.data
         if (data.returnCode === '-1001') {
-          console.log('请求失败');
+          console.log('请求失败')
         } else {
           return data
         }
@@ -64,10 +64,10 @@ class YYRequest {
         // 将 loading 效果移除
         setTimeout(() => {
           this.loading?.close()
-        }, 5000);
+        }, 5000)
         // console.log('所有的实例都有的拦截器:响应拦截失败')
         if (err.response.status === 404) {
-          console.log('404的错误信息');
+          console.log('404的错误信息')
         }
         return err
       }
@@ -89,7 +89,6 @@ class YYRequest {
             res = config.interceptors.responseInterceptor(res)
           }
 
-
           //将showLoading设置true 这样不会影响下一个请求
           this.showLoading = DEFAULT_LOADING
 
@@ -106,23 +105,22 @@ class YYRequest {
     })
   }
 
-  get<T = any>(config: YYRequestConfig<T>): Promise<T>{
-    return this.request<T>({...config,method:"GET"})
+  get<T = any>(config: YYRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET' })
   }
   post<T = any>(config: YYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "POST" });
+    return this.request<T>({ ...config, method: 'POST' })
   }
 
   // 更新数据（PUT请求）
   patch<T = any>(config: YYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "PATCH" });
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 
   // 删除数据（DELETE请求）
   delete<T = any>(config: YYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "DELETE" });
+    return this.request<T>({ ...config, method: 'DELETE' })
   }
 }
-
 
 export default YYRequest

@@ -8,60 +8,66 @@
         <template v-for="item in formItem" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
-            v-if="!item.isHidden"
-            :label="item.label"
-            :rules="item.rules"
-            :style="itemStyle">
-              <template v-if="item.type === 'input' || item.type === 'password'">
+              v-if="!item.isHidden"
+              :label="item.label"
+              :rules="item.rules"
+              :style="itemStyle"
+            >
+              <template
+                v-if="item.type === 'input' || item.type === 'password'"
+              >
                 <el-input
-                v-bind="item.otherOptions"
-                :placeholder="item.placeholder"
-                :show-password="item.type === 'password'"
-                :model-value="modelValue[`${item.field}`]"
-                @update:modelValue="handleValueChange($event,item.field)">
+                  v-bind="item.otherOptions"
+                  :placeholder="item.placeholder"
+                  :show-password="item.type === 'password'"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
+                >
                 </el-input>
               </template>
 
-              <template v-else-if="item.type==='select'">
-              <el-select
-              :placeholder="item.placeholder"
-              v-bind="item.otherOptions"
-              style="width: 100%;"
-              :model-value="modelValue[`${item.field}`]"
-              @update:modelValue="handleValueChange($event, item.field)">
-              <el-option
-              v-for="option in item.options"
-              :key="option.value"
-              :value="option.value"
-              :label="option.label"
-              :model-value="modelValue[`${item.field}`]"
-              @update:modelValue="handleValueChange($event, item.field)">
-              </el-option>
-            </el-select>
+              <template v-else-if="item.type === 'select'">
+                <el-select
+                  :placeholder="item.placeholder"
+                  v-bind="item.otherOptions"
+                  style="width: 100%"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
+                >
+                  <el-option
+                    v-for="option in item.options"
+                    :key="option.value"
+                    :value="option.value"
+                    :label="option.label"
+                    :model-value="modelValue[`${item.field}`]"
+                    @update:modelValue="handleValueChange($event, item.field)"
+                  >
+                  </el-option>
+                </el-select>
               </template>
-              <template v-else-if="item.type==='datepicker'">
-              <el-date-picker
-              style="width: 100%;"
-              v-bind="item.otherOptions"
-              :model-value="modelValue[`${item.field}`]"
-              @update:modelValue="handleValueChange($event, item.field)">
-            </el-date-picker>
+              <template v-else-if="item.type === 'datepicker'">
+                <el-date-picker
+                  style="width: 100%"
+                  v-bind="item.otherOptions"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
+                >
+                </el-date-picker>
               </template>
             </el-form-item>
           </el-col>
         </template>
       </el-row>
     </el-form>
-        <div class="footer">
-        <slot name="footer"></slot>
-      </div>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
-import { IFormItem } from '../types';
-
+import { IFormItem } from '../types'
 
 export default defineComponent({
   props: {
@@ -75,11 +81,11 @@ export default defineComponent({
     },
     lableWidth: {
       type: String,
-      default:"100px"
+      default: '100px'
     },
     itemStyle: {
       type: Object,
-      default: ()=>({
+      default: () => ({
         padding: '10px 40px'
       })
     },
@@ -92,13 +98,12 @@ export default defineComponent({
         sm: 24,
         xs: 24
       })
-    },
+    }
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
-
-    const handleValueChange = (value:any,field:string) => {
-      emit('update:modelValue',{...props.modelValue,[field]:value})
+    const handleValueChange = (value: any, field: string) => {
+      emit('update:modelValue', { ...props.modelValue, [field]: value })
     }
 
     return {
@@ -109,7 +114,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-  .yy-form{
-    padding-top: 22px;
-  }
+.yy-form {
+  padding-top: 22px;
+}
 </style>

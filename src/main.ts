@@ -13,7 +13,7 @@ const app = createApp(App)
 setupStore() //每次刷新页面都重新使用localCahe给vuex初始化
 app.use(store).use(router).mount('#app')
 app.use(ElementPlus, {
-  locale: zhCn,
+  locale: zhCn
 })
 //启用自定义全局属性
 app.use(globalProperties)
@@ -27,5 +27,3 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 //   method: 'GET',
 //   showLoading: false
 // })
-
-

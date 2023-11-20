@@ -15,13 +15,13 @@ export default defineComponent({
   props: {
     pieData: {
       type: Array as PropType<IDataType[]>,
-      required:true
+      required: true
     }
   },
   components: {
     baseChart
   },
-  setup (props) {
+  setup(props) {
     const pieOption = computed(() => {
       return {
         title: {
@@ -33,11 +33,11 @@ export default defineComponent({
         },
         legend: {
           orient: 'horizontal',
-            left: 'left'
+          left: 'left'
         },
         series: [
           {
-            name: "分类数据",
+            name: '分类数据',
             type: 'pie',
             radius: '50%',
             data: props.pieData,
@@ -51,9 +51,7 @@ export default defineComponent({
           }
         ]
       }
-
-      }
-    )
+    })
     return {
       pieOption
     }
@@ -61,6 +59,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

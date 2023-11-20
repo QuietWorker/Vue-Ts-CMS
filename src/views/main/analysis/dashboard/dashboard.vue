@@ -2,50 +2,53 @@
   <div class="dashboard">
     <el-row :gutter="10">
       <el-col :span="7">
-      <yyCard title="分类商品类型(饼图)">
-        <pieChart :pie-data="categoryGoodsCount"></pieChart>
-      </yyCard>
+        <yyCard title="分类商品类型(饼图)">
+          <pieChart :pie-data="categoryGoodsCount"></pieChart>
+        </yyCard>
       </el-col>
       <el-col :span="10">
-      <yyCard title="不同城市商品销量">
-        <mapChart :data="cityGoodsSalesData"></mapChart>
-      </yyCard>
-    </el-col>
+        <yyCard title="不同城市商品销量">
+          <mapChart :data="cityGoodsSalesData"></mapChart>
+        </yyCard>
+      </el-col>
       <el-col :span="7">
-      <yyCard title="分类商品数量(玫瑰图)">
-        <roseChart :rose-data="categoryGoodsCount"></roseChart>
-      </yyCard>
-    </el-col>
+        <yyCard title="分类商品数量(玫瑰图)">
+          <roseChart :rose-data="categoryGoodsCount"></roseChart>
+        </yyCard>
+      </el-col>
     </el-row>
 
     <el-row :gutter="10" class="content-row">
-        <el-col :span="12">
+      <el-col :span="12">
         <yyCard title="分类商品销量">
-            <lineChart v-bind="categoryGoodsSale"></lineChart>
+          <lineChart v-bind="categoryGoodsSale"></lineChart>
         </yyCard>
-        </el-col>
-        <el-col :span="12">
+      </el-col>
+      <el-col :span="12">
         <yyCard title="分类商品收藏量">
           <barChart v-bind="categoryGoodsFavor"></barChart>
         </yyCard>
       </el-col>
-
     </el-row>
   </div>
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store';
+import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
-import baseChart from '@/base-ui/chart'
-import { pieChart, roseChart, lineChart, barChart ,mapChart} from '@/components/page-charts'
+import {
+  pieChart,
+  roseChart,
+  lineChart,
+  barChart,
+  mapChart
+} from '@/components/page-charts'
 
 import yyCard from '@/base-ui/card'
 export default defineComponent({
   name: 'dashboard',
   components: {
     yyCard,
-    baseChart,
     pieChart,
     roseChart,
     lineChart,
@@ -53,7 +56,6 @@ export default defineComponent({
     mapChart
   },
   setup() {
-
     const store = useStore()
 
     store.dispatch('dashboard/getDashboardDataAction')
@@ -75,10 +77,11 @@ export default defineComponent({
         values.push(item.goodsCount)
       }
       return {
-        xLabels,values
+        xLabels,
+        values
       }
     })
-    const categoryGoodsFavor= computed(() => {
+    const categoryGoodsFavor = computed(() => {
       const xLabels: string[] = []
       const values: any[] = []
       const categoryGoodsFavor = store.state.dashboard.categoryGoodsFavor
@@ -87,7 +90,8 @@ export default defineComponent({
         values.push(item.goodsFavor)
       }
       return {
-        xLabels, values
+        xLabels,
+        values
       }
     })
     const cityGoodsSalesData = computed(() => {
@@ -107,9 +111,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-  .content-row{
-    margin-top: 20px;
-  }
-
+.content-row {
+  margin-top: 20px;
+}
 </style>
-

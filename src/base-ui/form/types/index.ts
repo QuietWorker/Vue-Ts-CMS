@@ -1,20 +1,19 @@
-type FormItemType = "input"|"password"|"select"|"datepicker"
+type FormItemType = 'input' | 'password' | 'select' | 'datepicker'
 
-export interface IFormItem{
-  field:string
-  type:FormItemType
+export interface IFormItem {
+  field: string
+  type: FormItemType
   label: string
   rules?: []
   placeholder: any
   options?: any
   otherOptions?: any
-  isHidden?:boolean
+  isHidden?: boolean
 }
 
-
-export interface IForm{
+export interface IForm {
   formItem: IFormItem[]
   lableWidth?: string
-  itemStyle?: Object
-  colLayout?:any
+  itemStyle?: object
+  colLayout?: any
 }

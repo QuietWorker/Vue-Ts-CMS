@@ -1,7 +1,7 @@
-import { IBreadcrumbItems } from "@/base-ui/breadcrumb";
-import { RouteRecordRaw } from "vue-router";
+import { IBreadcrumbItems } from '@/base-ui/breadcrumb'
+import { RouteRecordRaw } from 'vue-router'
 
-let firstRoute:any = null
+let firstRoute: any = null
 export function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
@@ -14,8 +14,7 @@ export function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
   //第二个参数表示要不要进行递归查找
 
   routeFiles.keys().forEach((key) => {
-
-        /* console.log(key);
+    /* console.log(key);
         ./analysis/dashboard/dashboard.ts
         ./analysis/overview/overview.ts
         ./product/category/category.ts
@@ -31,16 +30,15 @@ export function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
 
     const route = require('../router/main' + key.split('.')[1])
     allRoutes.push(route.default)
-
   })
-  console.log(allRoutes);
+  console.log(allRoutes)
   //2.根据菜单获取需要添加的routes
 
   //从userMenu中拿到菜单信息后 判断里面的type是否等于2 如果等于2就进行添加 否则进行递归查询children中type等于2的菜单,再进行路由添加
   //type=== 1 ->children ->继续往下判断type
   //type=== 2 url ->route
   //在内部封装一个递归函数
-  const _recurseRoute=(menus:any[]) => {
+  const _recurseRoute = (menus: any[]) => {
     for (const menu of menus) {
       //type =2 的菜单才是本项目中用户点击后需要进行路由映射的菜单
       if (menu.type === 2) {
@@ -49,8 +47,7 @@ export function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
         if (!firstRoute) {
           firstRoute = menu
         }
-      }
-      else {
+      } else {
         _recurseRoute(menu.children)
       }
     }
@@ -60,34 +57,36 @@ export function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
   return routes
 }
 
-export function pathMapBreadCrumb(userMenu: any[], currentPath: string): any{
+export function pathMapBreadCrumb(userMenu: any[], currentPath: string): any {
   const breadcrumbs: IBreadcrumbItems[] = []
-  pathMapToMenu(userMenu,currentPath,breadcrumbs)
+  pathMapToMenu(userMenu, currentPath, breadcrumbs)
   return breadcrumbs
 }
 
-
-export function pathMapToMenu(userMenu: any[], currentPath: string , breadcrumbs?:IBreadcrumbItems[]):any{
+export function pathMapToMenu(
+  userMenu: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumbItems[]
+): any {
   for (const menu of userMenu) {
     if (menu.type === 1) {
       //递归
       //menu.chilren有可能是undefined 不能进行遍历
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
       if (findMenu) {
-        breadcrumbs?.push({ name: menu.name})
-        breadcrumbs?.push({ name: findMenu.name})
+        breadcrumbs?.push({ name: menu.name })
+        breadcrumbs?.push({ name: findMenu.name })
         return findMenu
       }
-    }else if(menu.type===2&&menu.url ===currentPath){
+    } else if (menu.type === 2 && menu.url === currentPath) {
       return menu
     }
   }
 }
 export function mapMenusToPermissions(userMenu: any[]) {
-  const permissions:string[] = []
+  const permissions: string[] = []
 
   const _recueseGetPermisson = (menus: any) => {
-
     for (const menu of menus) {
       if (menu.type === 1 || menu.type === 2) {
         _recueseGetPermisson(menu.children ?? [])
@@ -102,7 +101,7 @@ export function mapMenusToPermissions(userMenu: any[]) {
 
 export function getMenuLeafKeys(menuList: any[]) {
   const leftKeys: number[] = []
-  const _recueseGetLeaf = (menuList:any[]) => {
+  const _recueseGetLeaf = (menuList: any[]) => {
     for (const menu of menuList) {
       if (menu.children) {
         _recueseGetLeaf(menu.children)
@@ -116,10 +115,9 @@ export function getMenuLeafKeys(menuList: any[]) {
   return leftKeys
 }
 
-export {firstRoute}
+export { firstRoute }
 // export function pathMapBreadCrumb(userMenu: any[], currentPath: string): any{
 //   const breadcrumbs: IBreadcrumbItems[] = []
-
 
 //   for (const menu of userMenu) {
 //     if (menu.type === 1) {
@@ -138,7 +136,6 @@ export {firstRoute}
 
 //   return breadcrumbs
 // }
-
 
 // export function pathMapToMenu(userMenu: any[], currentPath: string):any{
 //   for (const menu of userMenu) {

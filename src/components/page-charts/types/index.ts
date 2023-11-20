@@ -1,4 +1,4 @@
-export interface IDataType{
-  name: String
+export interface IDataType {
+  name: string
   value: any
 }
